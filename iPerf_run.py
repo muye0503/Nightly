@@ -12,10 +12,8 @@ def main():
 	parse.add_argument('--release', help='ltaf release', dest='release', required=True)
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
 	args = parse.parse_args()
-
 	wassp_plan = args.plan
 	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now())
-	#dvd = '/home/windriver/DVD_Install/vxworks7'
 	dvd = args.dvd
 	wassp_home = '/home/windriver/wassp-repos'
 	workspace = os.path.join('/home/windriver/Workspace', dir_name)
@@ -28,10 +26,9 @@ def main():
 	if os.path.exists('/home/windriver/tmp/rerun_parameters.sh'):
 		os.remove('/home/windriver/tmp/rerun_parameters.sh')
 	with open('/home/windriver/tmp/rerun_parameters.sh', 'wt') as f: 
-		print('log_path={LOGS}'.format(LOGS = logs), file = f)
-		print('plan={PLAN}'.format(PLAN = wassp_plan), file = f)
-		print('dvd={DVD}'.format(DVD = dvd), file = f)
-		print('workspace={WORKSPACE}'.format(WORKSPACE = workspace), file = f)
+		print('LOG_PATH={LOGS}'.format(LOGS = logs), file = f)
+		print('PLAN={PLAN}'.format(PLAN = wassp_plan), file = f)
+		print('WORKSPACE={WORKSPACE}'.format(WORKSPACE = workspace), file = f)
 	command = 'runwassp -f {WASSP_PLAN} -E "WASSP_WIND_HOME={WASSP_WIND_HOME}"  -E "WASSP_HOME={WASSP_HOME}" -E "WASSP_WORKSPACE_HOME={WASSP_WORKSPACE_HOME}" -E "WASSP_LOGS_HOME={WASSP_LOGS_HOME}" --continueIfReleaseInvalid'.format(WASSP_PLAN = wassp_plan, WASSP_WIND_HOME = dvd, WASSP_HOME = wassp_home, WASSP_WORKSPACE_HOME = workspace, WASSP_LOGS_HOME = logs)
 	# run wassp
 	os.system(command)
