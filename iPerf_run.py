@@ -2,8 +2,10 @@
 # coding: utf-8
 # 
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
+import random
 import argparse
+from iPerf_run_database import insert_data, insert_iperf_data
 
 def main():
 	parse = argparse.ArgumentParser()
@@ -13,7 +15,7 @@ def main():
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
 	args = parse.parse_args()
 	wassp_plan = args.plan
-	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now())
+	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now() + timedelta(seconds=random.randrange(60)))
 	dvd = args.dvd
 	wassp_home = '/home/windriver/wassp-repos'
 	workspace = os.path.join('/home/windriver/Workspace', dir_name)
@@ -23,12 +25,13 @@ def main():
 	if not os.path.exists(logs):
 		os.makedirs(logs)
 		os.system('ln -s {LOGS} {TARGET}'.format(LOGS = logs, TARGET = '/var/www/html'))
-	if os.path.exists('/home/windriver/tmp/rerun_parameters.sh'):
-		os.remove('/home/windriver/tmp/rerun_parameters.sh')
-	with open('/home/windriver/tmp/rerun_parameters.sh', 'wt') as f: 
-		print('LOG_PATH={LOGS}'.format(LOGS = logs), file = f)
-		print('PLAN={PLAN}'.format(PLAN = wassp_plan), file = f)
-		print('WORKSPACE={WORKSPACE}'.format(WORKSPACE = workspace), file = f)
+	#if os.path.exists('/home/windriver/tmp/rerun_parameters.sh'):
+	#	os.remove('/home/windriver/tmp/rerun_parameters.sh')
+	#with open('/home/windriver/tmp/rerun_parameters.sh', 'wt') as f: 
+	#	print('LOG_PATH={LOGS}'.format(LOGS = logs), file = f)
+	#	print('PLAN={PLAN}'.format(PLAN = wassp_plan), file = f)
+	#	print('WORKSPACE={WORKSPACE}'.format(WORKSPACE = workspace), file = f)
+	insert_data(wassp_plan, logs, workspace)
 	command = 'runwassp -f {WASSP_PLAN} -E "WASSP_WIND_HOME={WASSP_WIND_HOME}"  -E "WASSP_HOME={WASSP_HOME}" -E "WASSP_WORKSPACE_HOME={WASSP_WORKSPACE_HOME}" -E "WASSP_LOGS_HOME={WASSP_LOGS_HOME}" --continueIfReleaseInvalid'.format(WASSP_PLAN = wassp_plan, WASSP_WIND_HOME = dvd, WASSP_HOME = wassp_home, WASSP_WORKSPACE_HOME = workspace, WASSP_LOGS_HOME = logs)
 	# run wassp
 	os.system(command)
@@ -42,6 +45,7 @@ def main():
 	domain = 'networking'
 	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
 	os.system(upload_command)
+	insert_iperf_data(wassp_plan, week, os.path.basename(dvd), logs)
 
 if __name__ == '__main__':
 	main()

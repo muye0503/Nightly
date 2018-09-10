@@ -30,14 +30,14 @@ def main():
 	os.system(command)
 	# upload test result to LTAF
 	# bash ltaf_vxworks.sh -sprint Nightly  -week 2017-11-10 -ltaf vx7-SR0520-features -log /home/windriver/Logs/2017_11_10_17_24_49  -domain bsp_nightly -nightly
-	sprint = 'Nightly'
-	week = '{:%Y-%m-%d}'.format(datetime.now())
+	#sprint = 'Nightly'
+	#week = '{:%Y-%m-%d}'.format(datetime.now())
 	#week = '2017-12-31'
-	release = 'vxworks_sandbox'
+	#release = 'vxworks_sandbox'
 	#release = 'vx7-SR0520-features'
-	domain = 'networking'
-	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
-	os.system(upload_command)
+	#domain = 'networking'
+	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	#os.system(upload_command)
 
 if __name__ == '__main__':
 	main()
