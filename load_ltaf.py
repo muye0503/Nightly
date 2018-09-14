@@ -129,7 +129,7 @@ def create_ini(filename, result_dir, **kw):
 		#logging.info(file_data)
 		f.write(file_data)
 
-def load_ltaf():
+def main():
 	parse = argparse.ArgumentParser()
 	parse.add_argument('--log', help='log path', dest='log', required=True)
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
@@ -159,4 +159,4 @@ if __name__ == '__main__':
 	file = '/home/windriver/Logs/log_2018_09_12_18_27_15/p4080_18995_tcp_64/fsl_p3p4p5_platform_up/fsl_p4080_ds.BootVxBootRomfrag.Uboot.LoadVxWorks.up.fsl_common.true.gnu/testRunWorkingCopy.xml'
 	#parse_xml(file)
 	#create_ini(file)
-	load_ltaf()
+	main()
