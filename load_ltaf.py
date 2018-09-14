@@ -7,12 +7,14 @@ import os
 import logging
 import re
 import argparse
+from fnmatch import fnmatch
 logging.basicConfig(level=logging.WARNING)
 #logging.basicConfig(level=logging.INFO)
 
 def parse_xml(xml_file):
 	dict_node = {}
 	dict_node.setdefault('buildStatus', 'PASS')
+	dict_node.setdefault('vsboptions', '')
 	try:
 		tree = ET.parse(xml_file)
 		for node in tree.iter('logs'):
@@ -36,7 +38,8 @@ def parse_xml(xml_file):
 			dict_node['tech'] = node.attrib['tech']
 			dict_node['board_name'] = node.attrib['board_name']
 			dict_node['options'] = node.attrib['options']
-			dict_node['vsboptions'] = node.attrib['vsboptions']
+			if 'vsboptions' in node.attrib:
+				dict_node['vsboptions'] = node.attrib['vsboptions']
 
 		for node in tree.iter('report_data'):
 			if 'buildStatus' in node.attrib:
@@ -51,18 +54,22 @@ def parse_xml(xml_file):
 		print(e)
 		sys.exit()
 
-def find_xml(log):
-	result_dir = os.path.join(log, 'LTAF/Result')
-	os.makedirs(result_dir)
-	for dirpath, dirnames, filenames in os.walk(log_path):
+def find_xml(**kw):
+	result_dir = os.path.join(kw['log'], 'LTAF/Result')
+	if not os.path.exists(result_dir):
+		os.makedirs(result_dir)
+	for dirpath, dirnames, filenames in os.walk(kw['log']):
 			for filename in filenames:
 				if fnmatch(filename, 'testRunWorkingCopy.xml'):
-				
+					create_ini(os.path.join(dirpath, filename), result_dir, **kw)
+	for file in os.listdir(result_dir):
+		command = 'curl -F resultfile=@{FILE} http://pek-lpgtest3.wrs.com/ltaf/upload_nightly_results.php'.format(FILE = os.path.join(result_dir, file))
+		os.system(command)
 
-def create_ini(**kw):
-	print(kw)
+def create_ini(filename, result_dir, **kw):
+	#print(kw)
 	template = '/folk/hyan1/Nightly/result.ini'
-	case_ini = 'case.ini'
+	#case_ini = 'case.ini'
 	dict_ini = {}
 	dict_ini.setdefault('tags', 'LTAF_TAG')
 	dict_ini.setdefault('domain', 'networking')
@@ -73,7 +80,8 @@ def create_ini(**kw):
 	dict_ini.setdefault('sprint', 'Nightly')
 	# for release testing, need input USER_STORIES num
 	dict_ini.setdefault('requirements', '')
-	dict_node = parse_xml(xml_file)
+	logging.info(filename)
+	dict_node = parse_xml(filename)
 	dict_ini['BSP'] = dict_node['bsp']
 	dict_ini['Tool'] = dict_node['tool']
 	dict_ini['Barcode'] = dict_node['barcodes']
@@ -92,15 +100,17 @@ def create_ini(**kw):
 		dict_ini['function_pass'] = '1'
 	else:
 		dict_ini['function_fail'] = '1'
-	if kw['requirements']:
+	if 'requirements' in kw:
 		dict_ini['requirements'] = kw['requirements']
-	if kw['release']:
+	if 'release' in kw:
 		dict_ini['release_name'] = kw['release']
-	if kw['sprint']:
+	if 'sprint' in kw:
 		dict_ini['sprint'] = kw['sprint']
-	if kw['rundate']:
+	if 'rundate' in kw:
 		dict_ini['week'] = kw['rundate']
 
+	ini_name = '.'.join([dict_ini['test_name'], 'ini'])
+	case_ini = os.path.join(result_dir, ini_name)
 	file_data = ""
 	with open(template, 'r', encoding='utf-8') as f:
 		for line in f:
@@ -144,7 +154,7 @@ def main():
 	if p_requirements:
 		kw['requirements'] = p_requirements
 
-	create_ini(**kw)
+	find_xml(**kw)
 if __name__ == '__main__':
 	file = '/home/windriver/Logs/log_2018_09_12_18_27_15/p4080_18995_tcp_64/fsl_p3p4p5_platform_up/fsl_p4080_ds.BootVxBootRomfrag.Uboot.LoadVxWorks.up.fsl_common.true.gnu/testRunWorkingCopy.xml'
 	#parse_xml(file)
