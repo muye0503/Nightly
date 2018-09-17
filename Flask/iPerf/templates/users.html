@@ -1,0 +1,55 @@
+<!doctype html>
+<title>iPerf Data</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>Nightly Results:</h1>
+
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Bits
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		run_date
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400
+		</td>
+	</tr>
+{%for data in datas %}
+	<tr>
+	{% for key, value in data|dictsort %}
+		<td>
+    	{{ value }}
+    	</td>
+    {% endfor %}
+	</tr>
+{% endfor %}
+</table>
+
+
+
+
