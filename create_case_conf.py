@@ -53,6 +53,10 @@ def create_conf(dir, suite, **kw):
 
 	with open(case_conf, 'w', encoding='utf-8') as f:
 		f.write(file_data)
+	if 'release' in kw:
+		logging.info(case_conf)
+		command = 'curl -F testfile=@{FILE} http://pek-lpgtest3.wrs.com/ltaf/upload_test.php'.format(FILE = case_conf)
+		os.system(command)
 
 def main():
 	parse = argparse.ArgumentParser()
