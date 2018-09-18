@@ -6,6 +6,9 @@
 <table id="customers">
 	<tr class="alt">
 		<td>
+		Num
+		</td>
+		<td>
 		Bits
 		</td>
 		<td>
@@ -41,6 +44,9 @@
 	</tr>
 {%for data in datas %}
 	<tr>
+		<td>
+		{{ loop.index }}
+		</td>
 	{% for key, value in data|dictsort %}
 		<td>
     	{{ value }}
