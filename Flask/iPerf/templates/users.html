@@ -1,18 +1,19 @@
 <!doctype html>
 <title>iPerf Data</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<h1>Nightly Results:</h1>
+<h1>iPerf Nightly Results</h1>
 
+<h2>UP</h2>
 <table id="customers">
 	<tr class="alt">
 		<td>
 		Num
 		</td>
 		<td>
-		Bits
+		board
 		</td>
 		<td>
-		board
+		Bits
 		</td>
 		<td>
 		BSP
@@ -24,38 +25,197 @@
 		Mode
 		</td>
 		<td>
-		run_date
-		</td>
-		<td>
-		spin
-		</td>
-		<td>
-		TCP_1024
+		TCP_64_bl
 		</td>
 		<td>
 		TCP_64
 		</td>
 		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
 		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
 		</td>
 		<td>
 		UDP_1400
 		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
 	</tr>
-{%for data in datas %}
-	<tr>
+{%for data in datas_up %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
 		<td>
 		{{ loop.index }}
 		</td>
-	{% for key, value in data|dictsort %}
-		<td>
-    	{{ value }}
+	
+	{% for key in datas_up[data] %}
+	    {% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_up[data][key] }}
     	</td>
     {% endfor %}
+    
 	</tr>
 {% endfor %}
 </table>
 
+<h2>SMP</h2>
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		TCP_64_bl
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
+		</td>
+		<td>
+		UDP_1400
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
+	</tr>
+{%for data in datas_smp %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
+		<td>
+		{{ loop.index }}
+		</td>
+	
+	{% for key in datas_smp[data] %}
+		{% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_smp[data][key] }}
+    	</td>
+    {% endfor %}
+    
+	</tr>
+{% endfor %}
+</table>
 
-
+<h2>SMP 1Core</h2>
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		TCP_64_bl
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
+		</td>
+		<td>
+		UDP_1400
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
+	</tr>
+{%for data in datas_smp_1core %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
+		<td>
+		{{ loop.index }}
+		</td>
+	
+	{% for key in datas_smp_1core[data] %}
+		{% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_smp_1core[data][key] }}
+    	</td>
+    {% endfor %}
+    
+	</tr>
+{% endfor %}
+</table>
 

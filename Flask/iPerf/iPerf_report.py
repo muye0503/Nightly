@@ -10,11 +10,18 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = "mongodb://localhost:27017/iperf_db"
 mongo = PyMongo(app)
 
-def order_data(data):
-	order_nightly_data = OrderedDict()
+def order_data(data, mode):
+	order_nightly_datas = OrderedDict()
+	nightly_datas = {}
 	for item in data:
-		print(item['board'])
-		baseline_data = mongo.db.iperf_up_bl_tb.find_one({"board":item['board']}, {'_id':0})
+		order_nightly_data = OrderedDict()
+		#print(item['board'])
+		if mode == 'up':
+			baseline_data = mongo.db.iperf_up_bl_tb.find_one({"board":item['board']}, {'_id':0})
+		if mode == 'smp':
+			baseline_data = mongo.db.iperf_smp_bl_tb.find_one({"board":item['board']}, {'_id':0})
+		if mode == 'smp_1core':
+			baseline_data = mongo.db.iperf_smp_1core_bl_tb.find_one({"board":item['board']}, {'_id':0})
 		for key in item:
 			order_nightly_data['board'] = item['board']
 			order_nightly_data['Bits'] = item['Bits']
@@ -31,7 +38,27 @@ def order_data(data):
 			order_nightly_data['UDP_1400'] = item['UDP_1400']
 			order_nightly_data['spin'] = item['spin']
 			order_nightly_data['run_date'] = item['run_date']
-		yield order_nightly_data
+		nightly_datas[item['board']] = order_nightly_data
+	if 'idpQ35-18180' in nightly_datas:
+		order_nightly_datas['idpQ35-18180'] = nightly_datas['idpQ35-18180']
+	if 'fsl_p4080_ds-18995' in nightly_datas:
+		order_nightly_datas['fsl_p4080_ds-18995'] = nightly_datas['fsl_p4080_ds-18995']
+	if 'fsl_imx6_sabrelite-25005' in nightly_datas:
+		order_nightly_datas['fsl_imx6_sabrelite-25005'] = nightly_datas['fsl_imx6_sabrelite-25005']
+	if 'TI_keystone2_K2E-28384' in nightly_datas:
+		order_nightly_datas['TI_keystone2_K2E-28384'] = nightly_datas['TI_keystone2_K2E-28384']
+	if 'xilinx_zynq7k_zc706-28385' in nightly_datas:
+		order_nightly_datas['xilinx_zynq7k_zc706-28385'] = nightly_datas['xilinx_zynq7k_zc706-28385']
+	if 'fsl_P2020RDB-18491' in nightly_datas:
+		order_nightly_datas['fsl_P2020RDB-18491'] = nightly_datas['fsl_P2020RDB-18491']
+	if 'XILINX_ZCU102-25087' in nightly_datas:
+		order_nightly_datas['XILINX_ZCU102-25087'] = nightly_datas['XILINX_ZCU102-25087']
+	if 'fsl_T2080QDS-22041' in nightly_datas:
+		order_nightly_datas['fsl_T2080QDS-22041'] = nightly_datas['fsl_T2080QDS-22041']
+	if 'TI_AM335x_EVM-22599' in nightly_datas:
+		order_nightly_datas['TI_AM335x_EVM-22599'] = nightly_datas['TI_AM335x_EVM-22599']
+
+	return order_nightly_datas
 
 @app.route('/date')
 @app.route('/date/<string:date>')
@@ -42,26 +69,26 @@ def user(date=None):
 	else:
 		#print('=================')
 		#print(date)
-		nightly_data = mongo.db.iperf_up_tb.find({'run_date':date}, {'_id':0})
-		order_nightly_data = order_data(nightly_data)
-		#print('=================')
-		#for item in order_nightly_data:
-			#print(item['board'])
+		nightly_data_up = mongo.db.iperf_up_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_up = order_data(nightly_data_up, 'up')
+		nightly_data_smp = mongo.db.iperf_smp_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_smp = order_data(nightly_data_smp, 'smp')
+		nightly_data_smp_1core = mongo.db.iperf_smp_1core_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_smp_1core = order_data(nightly_data_smp_1core, 'smp_1core')
+		#for item in order_nightly_datas:
+			#print(order_nightly_datas[item]['board'])
 			
-		#print("++++++++++++++++++")
-		#for item in baseline_data:
-			#print(item)
-			#for key, value in item.items():
-				#print(key, value)
-		if order_nightly_data is not None:
-			return render_template('users.html', datas=order_nightly_data)
+		if order_nightly_datas_up is not None:
+			return render_template('users.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
 		else:
 			return "No data found!"
 
 @app.route('/baseline')
 def get_data():
-	baseline_data = mongo.db.iperf_up_bl_tb.find({}, {'_id':0})
-	return render_template('baseline.html', datas = baseline_data)
+	baseline_data_up = mongo.db.iperf_up_bl_tb.find({}, {'_id':0})
+	baseline_data_smp = mongo.db.iperf_smp_bl_tb.find({}, {'_id':0})
+	baseline_data_smp_1core = mongo.db.iperf_smp_1core_bl_tb.find({}, {'_id':0})
+	return render_template('baseline.html', datas_up = baseline_data_up, datas_smp = baseline_data_smp, datas_smp_1core = baseline_data_smp_1core)
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
