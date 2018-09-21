@@ -59,6 +59,16 @@ def insert_iperf_data(plan, run_date, spin, log_path):
 	print(mydict)
 	mycol.insert_one(mydict)
 
+def insert_baseline_data(plan, spin, log_path):
+	conn = Connect.get_connection()
+	mydb = conn.iperf_db
+	mycol = mydb.iperf_up_bl_tb
+	dict_data = get_log_data(log_path)
+	dict_config = get_config(plan)
+	mydict = {"spin":spin, "board":dict_config['Board'], "Bits":dict_config['Bits'], "Mode":dict_config['Mode'], "CPU":dict_config['CPU'], "BSP":dict_config['BSP'], "TCP_64":dict_data['TCP_64'], "TCP_1024":dict_data['TCP_1024'], "TCP_65536":dict_data['TCP_65536'], "UDP_1400":dict_data['UDP_1400']}
+	print(mydict)
+	mycol.insert_one(mydict)
+
 def update_iperf_data(plan, run_date, log_path):
 	conn = Connect.get_connection()
 	mydb = conn.iperf_db

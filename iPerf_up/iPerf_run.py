@@ -5,7 +5,7 @@ import os
 from datetime import datetime, timedelta
 import random
 import argparse
-from iPerf_run_database import insert_data, insert_iperf_data
+from iPerf_run_database import insert_data, insert_iperf_data, insert_baseline_data
 
 def main():
 	parse = argparse.ArgumentParser()
@@ -37,15 +37,18 @@ def main():
 	os.system(command)
 	# upload test result to LTAF
 	# bash ltaf_vxworks.sh -sprint Nightly  -week 2017-11-10 -ltaf vx7-SR0520-features -log /home/windriver/Logs/2017_11_10_17_24_49  -domain bsp_nightly -nightly
-	sprint = 'Nightly'
+	#sprint = 'Nightly'
 	#week = '{:%Y-%m-%d}'.format(datetime.now())
 	week = args.rundate
 	#release = 'vx7-integration'
-	release = args.release
-	domain = 'networking'
-	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
-	#os.system(upload_command)
+	#release = args.release
+	#release = 'vxworks_sandbox'
+	#domain = 'networking'
+	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_up/load_ltaf.py --log {LOG} --rundate {RUNDATE}'.format( LOG= logs, RUNDATE = week)
+	os.system(upload_command)
 	insert_iperf_data(wassp_plan, week, os.path.basename(dvd), logs)
+	#insert_baseline_data(wassp_plan, os.path.basename(dvd), logs)
 
 if __name__ == '__main__':
 	main()

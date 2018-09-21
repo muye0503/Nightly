@@ -103,8 +103,8 @@ def main():
 	sprint = 'Nightly'
 	#week = '{:%Y-%m-%d}'.format(datetime.now())
 	week = args.rundate
-	release = args.release
-	#release = 'vxworks_sandbox'
+	#release = args.release
+	release = 'vxworks_sandbox'
 	domain = 'networking'
 	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
 	os.system(upload_command)
