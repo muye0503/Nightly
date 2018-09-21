@@ -1,0 +1,157 @@
+<!doctype html>
+<title>iPerf Data</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>iPerf Baseline</h1>
+<h2>UP Baseline:</h2>
+
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400
+		</td>
+	</tr>
+{%for data in datas_up %}
+	<tr>
+		<td>
+		{{ loop.index }}
+		</td>
+	{% for key, value in data|dictsort %}
+		<td>
+    	{{ value }}
+    	</td>
+    {% endfor %}
+	</tr>
+{% endfor %}
+</table>
+
+<h2>SMP Baseline:</h2>
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400
+		</td>
+	</tr>
+{%for data in datas_smp %}
+	<tr>
+		<td>
+		{{ loop.index }}
+		</td>
+	{% for key, value in data|dictsort %}
+		<td>
+    	{{ value }}
+    	</td>
+    {% endfor %}
+	</tr>
+{% endfor %}
+</table>
+
+<h2>SMP_1Core Baseline:</h2>
+<table id="customers">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400
+		</td>
+	</tr>
+{%for data in datas_smp_1core %}
+	<tr>
+		<td>
+		{{ loop.index }}
+		</td>
+	{% for key, value in data|dictsort %}
+		<td>
+    	{{ value }}
+    	</td>
+    {% endfor %}
+	</tr>
+{% endfor %}
+</table>
