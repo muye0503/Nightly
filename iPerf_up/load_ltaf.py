@@ -99,6 +99,8 @@ def create_ini(filename, result_dir, **kw):
 	dict_ini['test_suite'] = dict_node['test_suite']
 	dict_ini['SpinType'] = dict_node['SpinType']
 	dict_ini['Spin'] = dict_node['Spin']
+	if dict_ini['status'] == 'TIMEOUT':
+		dict_ini['status'] = 'BLOCKED'
 	if dict_ini['status'] == 'PASS':
 		dict_ini['function_pass'] = '1'
 	else:
