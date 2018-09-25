@@ -73,7 +73,7 @@ def create_ini(filename, result_dir, **kw):
 	template = '/folk/hyan1/Nightly/result.ini'
 	#case_ini = 'case.ini'
 	dict_ini = {}
-	dict_ini.setdefault('tags', 'LTAF_TAG')
+	dict_ini.setdefault('tags', 'IPERF')
 	dict_ini.setdefault('domain', 'networking')
 	dict_ini.setdefault('test_component', 'networking')
 	dict_ini.setdefault('function_pass', '0')
