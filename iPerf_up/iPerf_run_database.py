@@ -13,7 +13,8 @@ def insert_data(plan, log_path, workspace):
 	conn = Connect.get_connection()
 	mydb = conn.rerun_db
 	mycol = mydb.rerun_up_tb
-	mydict = {"plan":plan, "log_path":log_path, "workspace":workspace}
+	plan_file = os.path.basename(plan)
+	mydict = {"plan":plan_file, "log_path":log_path, "workspace":workspace}
 	mycol.insert_one(mydict)
 	#for rec in mycol.find():
 	#	print(rec)
@@ -25,11 +26,13 @@ def delete_data():
 	mycol.delete_many({})
 	#conn.close()
 
-def find_data(findkey):
+def find_data(plan):
 	conn = Connect.get_connection()
 	mydb = conn.rerun_db
 	mycol = mydb.rerun_up_tb
-	myquery = {"plan":findkey}
+	plan_file = os.path.basename(plan)
+	myquery = {"plan":plan_file}
+	print(myquery)
 	print(mycol.find_one(myquery))
 	return mycol.find_one(myquery)
 
@@ -77,7 +80,7 @@ def update_iperf_data(plan, run_date, log_path):
 	print(dict_data)
 	dict_config = get_config(plan)
 	myquery = {"board":dict_config['Board'], "run_date":run_date}
-	mycol.update(myquery,{"$set":dict_data})
+	mycol.update_many(myquery,{"$set":dict_data})
 
 def get_rerunlog_data(log_path):
 	dict_data = {}

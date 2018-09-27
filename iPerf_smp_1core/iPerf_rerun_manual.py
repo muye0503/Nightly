@@ -4,23 +4,23 @@
 import os.path
 import argparse
 from datetime import datetime
+from iPerf_run_database import find_data, update_iperf_data
 
 
 def main():
 	parse = argparse.ArgumentParser()
 	#parse.add_argument('--log', help='rerun log path', dest='log', required=True)
 	parse.add_argument('--plan', help='test plan', dest='plan', required=True)
-	parse.add_argument('--workspace', help='workspace', dest='workspace', required=True)
+	#parse.add_argument('--workspace', help='workspace', dest='workspace', required=True)
 	parse.add_argument('--dvd', help='dvd', dest='dvd', required=True)
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
 	parse.add_argument('--release', help='ltaf release', dest='release', required=True)
 	args = parse.parse_args()
-	#file = args.log
 	plan = args.plan
-	#wassp_plan = create_rerun_plan(file, plan)
+	dict_tmp = find_data(plan)
+	print(dict_tmp['workspace'])
 	wassp_home = '/home/windriver/wassp-repos'
-	workspace = args.workspace
-	#logs = args.log
+	workspace = dict_tmp['workspace']
 	dvd = args.dvd
 	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now())
 	logs = os.path.join('/home/windriver/Logs', dir_name)
@@ -35,7 +35,9 @@ def main():
 	release = args.release
 	#release = 'vxworks_sandbox'
 	domain = 'networking'
-	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_smp_1core/load_ltaf.py --log {LOG} --rundate {RUNDATE} --release {RELEASE}'.format( LOG= logs, RUNDATE = week, RELEASE = release)
 	os.system(upload_command)
+	update_iperf_data(plan, week, logs)
 if __name__ == '__main__':
 	main()
