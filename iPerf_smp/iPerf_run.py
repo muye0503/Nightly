@@ -41,11 +41,11 @@ def main():
 	#week = '{:%Y-%m-%d}'.format(datetime.now())
 	week = args.rundate
 	#release = 'vx7-integration'
-	#release = args.release
+	release = args.release
 	#release = 'vxworks_sandbox'
 	#domain = 'networking'
 	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
-	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_up/load_ltaf.py --log {LOG} --rundate {RUNDATE}'.format( LOG= logs, RUNDATE = week)
+	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_smp/load_ltaf.py --log {LOG} --rundate {RUNDATE} --release {RELEASE}'.format( LOG= logs, RUNDATE = week, RELEASE = release)
 	os.system(upload_command)
 	insert_iperf_data(wassp_plan, week, os.path.basename(dvd), logs)
 	#insert_baseline_data(wassp_plan, os.path.basename(dvd), logs)

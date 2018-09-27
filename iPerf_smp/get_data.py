@@ -11,8 +11,7 @@ def get_baseline(case_path):
     m = pat.search(mode)
     mode_name = m.group(1)
     case = case_path.split('/')[-1]
-    board_name = case.split('.')[-2]
-    case_name = case.split('.')[-1]
+    board_name, case_name = case.split('.')
     #print(mode_name, board_name, case_name)
     conn = Connect.get_connection()
     mydb = conn.iperf_db
