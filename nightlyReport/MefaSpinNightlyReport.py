@@ -226,7 +226,7 @@ def send_nighlty_test_report_email_ltaf(email_to_list, spin_name, ltaf_release_n
     htmlFd.close()
     cmd = "cat ltaf_email.html"
     (rtn_code, mail_body) = run_shell_cmd(cmd)
-    mail_title = 'VxWorks 7 Networking Nightly Testing Report (%s) - IPERF' % report_end_date
+    mail_title = 'VxWorks 7 Networking Nightly Testing Report (%s) - IPERF' % run_date
     mail_content = {'from': 'VxWorks7 Nightly NEVER_REPLY <target@windriver.com>',
                    'to': email_to_list,
                    'subject': mail_title,
