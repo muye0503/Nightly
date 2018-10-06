@@ -2,18 +2,17 @@
 # coding: utf-8
 # 
 import os.path
+import argparse
+from datetime import datetime
 import json
 import shutil
 from tempfile import NamedTemporaryFile
 import xlrd
 import xlwt
 import xlutils
-import argparse
-from datetime import datetime
 from iPerf_run_database import find_data, update_iperf_data
+import sys
 
-#plan = '/folk/hyan1/wassp/ia_18180_idpQ35.xls'
-#file = '/home/windriver/Logs/log_2017_12_17_22_35_51/Summary/details.json'
 dict_case = {}
 
 def create_case_result(file):
@@ -49,7 +48,7 @@ def create_rerun_plan(file, plan):
 		wb_ws = wb.get_sheet(0)
 		x = 1
 		for cell in cells_case_name:
-			if dict_case[cell.value] == 'PASS':
+			if cell.value in dict_case and dict_case[cell.value] == 'PASS':
 				wb_ws.write(x,3,0)
 			x = x+1
 		wb.save(f.name)	
@@ -71,6 +70,12 @@ def create_rerun_plan(file, plan):
 			print('%s:%s' %(item, dict_case[item]))
 	return f.name	
 
+def time_delta(run_date):
+    y = datetime.strptime(run_date, '%Y-%m-%d')
+    z = datetime.now()
+    diff = z - y
+    return diff.days - 1
+
 def main():
 	parse = argparse.ArgumentParser()
 	#parse.add_argument('--log', help='rerun log path', dest='log', required=True)
@@ -80,33 +85,31 @@ def main():
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
 	parse.add_argument('--release', help='ltaf release', dest='release', required=True)
 	args = parse.parse_args()
-	#file = args.log
+	if time_delta(args.rundate) > 0:
+		sys.exit(0)
 	plan = args.plan
-	print(plan)
 	dict_tmp = find_data(plan)
 	print(dict_tmp['workspace'])
-	print(dict_tmp['log_path'])
-	file = dict_tmp['log_path']
-	workspace = dict_tmp['workspace']
-	wassp_plan = create_rerun_plan(file, plan)
 	wassp_home = '/home/windriver/wassp-repos'
-	#workspace = args.workspace
-	#logs = args.log
+	workspace = dict_tmp['workspace']
+	log_path = dict_tmp['log_path']
+	rerun_plan = create_rerun_plan(log_path, plan)
 	dvd = args.dvd
 	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now())
 	logs = os.path.join('/home/windriver/Logs', dir_name)
 	if not os.path.exists(logs):
 		os.makedirs(logs)
 		os.system('ln -s {LOGS} {TARGET}'.format(LOGS = logs, TARGET = '/var/www/html'))
-	command = 'runwassp -f {WASSP_PLAN} -E "WASSP_WIND_HOME={WASSP_WIND_HOME}"  -E "WASSP_HOME={WASSP_HOME}" -E "WASSP_WORKSPACE_HOME={WASSP_WORKSPACE_HOME}" -E "WASSP_LOGS_HOME={WASSP_LOGS_HOME}" --continueIfReleaseInvalid -s exec --exec-retries 5'.format(WASSP_PLAN = wassp_plan, WASSP_WIND_HOME = dvd, WASSP_HOME = wassp_home, WASSP_WORKSPACE_HOME = workspace, WASSP_LOGS_HOME = logs)
+	command = 'runwassp -f {WASSP_PLAN} -E "WASSP_WIND_HOME={WASSP_WIND_HOME}"  -E "WASSP_HOME={WASSP_HOME}" -E "WASSP_WORKSPACE_HOME={WASSP_WORKSPACE_HOME}" -E "WASSP_LOGS_HOME={WASSP_LOGS_HOME}" --continueIfReleaseInvalid -s exec --exec-retries 5'.format(WASSP_PLAN = rerun_plan, WASSP_WIND_HOME = dvd, WASSP_HOME = wassp_home, WASSP_WORKSPACE_HOME = workspace, WASSP_LOGS_HOME = logs)
 	os.system(command)
 	sprint = 'Nightly'
 	#week = '{:%Y-%m-%d}'.format(datetime.now())
 	week = args.rundate
-	#release = args.release
-	release = 'vxworks_sandbox'
+	release = args.release
+	#release = 'vxworks_sandbox'
 	domain = 'networking'
-	upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
+	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_smp/load_ltaf.py --log {LOG} --rundate {RUNDATE} --release {RELEASE}'.format( LOG= logs, RUNDATE = week, RELEASE = release)
 	os.system(upload_command)
 	update_iperf_data(plan, week, logs)
 if __name__ == '__main__':

@@ -80,7 +80,8 @@ def update_iperf_data(plan, run_date, log_path):
 	print(dict_data)
 	dict_config = get_config(plan)
 	myquery = {"board":dict_config['Board'], "run_date":run_date}
-	mycol.update_many(myquery,{"$set":dict_data})
+	if dict_data:
+		mycol.update_many(myquery,{"$set":dict_data})
 
 def get_rerunlog_data(log_path):
 	dict_data = {}
