@@ -54,7 +54,7 @@ def parse_xml(xml_file):
 	except Exception as e:
 		print("parse xml fail!")
 		print(e)
-		sys.exit()
+		sys.exit(0)
 
 def find_xml(**kw):
 	result_dir = os.path.join(kw['log'], 'LTAF/Result')

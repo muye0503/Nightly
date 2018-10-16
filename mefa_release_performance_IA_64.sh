@@ -29,5 +29,5 @@ cd $mefaPlat;
 # Q35 
 #for testSuite in $sanity; do
 ./runTest.tcl -suite $testSuite -suitedir $suiteDir -path $dvdPath -vxworks 7 -syslog 3 -caselog 2 -productinclude 6.9.2.f0 $dockerDNS $buildOps \
--64bit -target cpu=NEHALEM,bsp=itl_generic,tool=gnu,portSrv=128.224.164.51:2012,pduSrv=128.224.164.166:8,bootdev=gei5,eif=eth1,ftp=windriver,passwd=windriver \
+-64bit -target cpu=NEHALEM,bsp=itl_generic,tool=llvm,portSrv=128.224.164.51:2012,pduSrv=128.224.164.166:8,bootdev=gei5,eif=eth1,ftp=windriver,passwd=windriver \
 -fastvsb -buildcfgfile build_q35_vx7_smp_4.cfg -performance

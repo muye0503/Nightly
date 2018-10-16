@@ -38,6 +38,6 @@ cd $mefaPlat;
 # # t2080(24550) p4080(18996) IA(22037)
 #for testSuite in $sanity; do
 ./runTest.tcl -suite $testSuite -suitedir $suiteDir -path $dvdPath -vxworks 7 -syslog 3 -caselog 2 -productinclude 6.9.2.f0 $dockerDNS $buildOps \
--target cpu=PPCE500MC,bsp=fsl_p3p4p5,tool=diab,portSrv=128.224.164.56:2008,pduSrv=128.224.164.112:3,bootdev=dtsec0,eif=eth4,ftp=windriver,passwd=windriver,uboot="uPrompt='=>';dtbFile=p4080ds.dtb;uUAddr=tftp 0x1000000;uDAddr=tftp 0xf000000;uBAddr=bootm 0x1000000 - 0xf000000" \
--target cpu=NEHALEM,bsp=itl_generic,tool=gnu,portSrv=128.224.164.57:2002,pduSrv=128.224.164.113:3,bootdev=gei0,eif=eth4,ftp=windriver,passwd=windriver \
+-target cpu=PPCE500MC,bsp=fsl_p3p4p5,tool=gnu,portSrv=128.224.164.56:2008,pduSrv=128.224.164.112:3,bootdev=dtsec0,eif=eth4,ftp=windriver,passwd=windriver,uboot="uPrompt='=>';dtbFile=p4080ds.dtb;uUAddr=tftp 0x1000000;uDAddr=tftp 0xf000000;uBAddr=bootm 0x1000000 - 0xf000000" \
+-target cpu=NEHALEM,bsp=itl_generic,tool=llvm,portSrv=128.224.164.57:2002,pduSrv=128.224.164.113:3,bootdev=gei0,eif=eth4,ftp=windriver,passwd=windriver \
 -fastvsb -mail "haixiao.yan@windriver.com";

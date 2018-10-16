@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
+import sys
+sys.path.append('/folk/hyan1/')
 import pymongo
-from connect import Connect
+from Nightly.common.connect import Connect
 from fnmatch import fnmatch
 import os
-from get_data import get_throughput
+from Nightly.common.get_data import get_throughput
 import xlrd
 
 

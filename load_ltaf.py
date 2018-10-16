@@ -23,7 +23,9 @@ def parse_xml(xml_file):
 		for node in tree.iter('dvd'):
 			str = node.attrib['dir']
 			list_str = str.split('/')
-			dict_node['SpinType'] = list_str[-1]
+			l_type = list_str[-1].split('-')[-1]
+			dict_node['Spin'] = list_str[-1]
+			dict_node['SpinType'] = l_type
 		for node in tree.iter('test_case'):
 			str = node.attrib['uri']
 			list_str = str.split('/')
@@ -52,7 +54,7 @@ def parse_xml(xml_file):
 	except Exception as e:
 		print("parse xml fail!")
 		print(e)
-		sys.exit()
+		sys.exit(0)
 
 def find_xml(**kw):
 	result_dir = os.path.join(kw['log'], 'LTAF/Result')
@@ -71,7 +73,7 @@ def create_ini(filename, result_dir, **kw):
 	template = '/folk/hyan1/Nightly/result.ini'
 	#case_ini = 'case.ini'
 	dict_ini = {}
-	dict_ini.setdefault('tags', 'LTAF_TAG')
+	dict_ini.setdefault('tags', 'IPERF')
 	dict_ini.setdefault('domain', 'networking')
 	dict_ini.setdefault('test_component', 'networking')
 	dict_ini.setdefault('function_pass', '0')
@@ -96,6 +98,11 @@ def create_ini(filename, result_dir, **kw):
 	dict_ini['test_name'] = dict_node['test_name']
 	dict_ini['test_suite'] = dict_node['test_suite']
 	dict_ini['SpinType'] = dict_node['SpinType']
+	dict_ini['Spin'] = dict_node['Spin']
+	if dict_ini['status'] == 'TIMEOUT' or dict_ini['status'] == 'EXCEPTION' or dict_ini['status'] == 'SKIP':
+		dict_ini['status'] = 'BLOCKED'
+	if dict_ini['status'] == 'NotStarted':
+		dict_ini['status'] = 'Not Started'
 	if dict_ini['status'] == 'PASS':
 		dict_ini['function_pass'] = '1'
 	else:

@@ -7,7 +7,8 @@ from flask_pymongo import PyMongo
 from collections import OrderedDict
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = "mongodb://localhost:27017/iperf_db"
+#app.config['MONGO_URI'] = "mongodb://localhost:27017/iperf_db"
+app.config['MONGO_URI'] = "mongodb://128.224.153.34:27017/iperf_db"
 mongo = PyMongo(app)
 
 def order_data(data, mode):

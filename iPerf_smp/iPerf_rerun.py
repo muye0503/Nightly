@@ -3,7 +3,7 @@
 # 
 import os.path
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import shutil
 from tempfile import NamedTemporaryFile
@@ -12,6 +12,7 @@ import xlwt
 import xlutils
 from iPerf_run_database import find_data, update_iperf_data
 import sys
+import random
 
 dict_case = {}
 
@@ -95,7 +96,7 @@ def main():
 	log_path = dict_tmp['log_path']
 	rerun_plan = create_rerun_plan(log_path, plan)
 	dvd = args.dvd
-	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now())
+	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now() + timedelta(seconds=random.randrange(60)))
 	logs = os.path.join('/home/windriver/Logs', dir_name)
 	if not os.path.exists(logs):
 		os.makedirs(logs)
