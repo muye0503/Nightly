@@ -58,6 +58,8 @@ def order_data(data, mode):
 		order_nightly_datas['fsl_T2080QDS-22041'] = nightly_datas['fsl_T2080QDS-22041']
 	if 'TI_AM335x_EVM-22599' in nightly_datas:
 		order_nightly_datas['TI_AM335x_EVM-22599'] = nightly_datas['TI_AM335x_EVM-22599']
+	if 'fsl_LS1021A_TWR-28380' in nightly_datas:
+		order_nightly_datas['fsl_LS1021A_TWR-28380'] = nightly_datas['fsl_LS1021A_TWR-28380']
 
 	return order_nightly_datas
 
