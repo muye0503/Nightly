@@ -83,8 +83,11 @@ def remove_file(path):
 			print('remove link %s' %file)
 			os.unlink(file)
 		elif os.path.isdir(file):
-		  print('remove %s' %file)
-		  shutil.rmtree(file)
+			print('remove %s' %file)
+			try:
+		  		shutil.rmtree(file)
+			except PermissionError:
+		  		print('Permission denied:{0}'.format(file))
 		
 
 def get_clean_file_list(path):
@@ -107,7 +110,7 @@ if __name__ == "__main__":
 	match = pattern.match(result)
 	used = match.group()
 	print(used)
-	if int(used) > 90:
+	if int(used) >= 90:
 		for dir in path_list:
 			#print(dir)
 			remove_file(dir)
