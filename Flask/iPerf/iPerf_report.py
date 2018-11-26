@@ -60,6 +60,22 @@ def order_data(data, mode):
 		order_nightly_datas['TI_AM335x_EVM-22599'] = nightly_datas['TI_AM335x_EVM-22599']
 	if 'fsl_LS1021A_TWR-28380' in nightly_datas:
 		order_nightly_datas['fsl_LS1021A_TWR-28380'] = nightly_datas['fsl_LS1021A_TWR-28380']
+	if 'fsl_VF610_TWR-24601' in nightly_datas:
+		order_nightly_datas['fsl_VF610_TWR-24601'] = nightly_datas['fsl_VF610_TWR-24601']
+	if 'idpQ35-18202' in nightly_datas:
+		order_nightly_datas['idpQ35-18202'] = nightly_datas['idpQ35-18202']
+	if 'Q170-28512' in nightly_datas:
+		order_nightly_datas['Q170-28512'] = nightly_datas['Q170-28512']
+	if 'idpQ35-18180-32' in nightly_datas:
+		order_nightly_datas['idpQ35-18180-32'] = nightly_datas['idpQ35-18180-32']
+	if 'Cyclone-21989' in nightly_datas:
+		order_nightly_datas['Cyclone-21989'] = nightly_datas['Cyclone-21989']
+	if 'fsl_LS1043A_RDB_PC-25064' in nightly_datas:
+		order_nightly_datas['fsl_LS1043A_RDB_PC-25064'] = nightly_datas['fsl_LS1043A_RDB_PC-25064']
+	if 'fsl_LS1043A_RDB_PC-25064-32' in nightly_datas:
+		order_nightly_datas['fsl_LS1043A_RDB_PC-25064-32'] = nightly_datas['fsl_LS1043A_RDB_PC-25064-32']
+	if 'TI_keystone2_K2E-28384-IP' in nightly_datas:
+		order_nightly_datas['TI_keystone2_K2E-28384-IP'] = nightly_datas['TI_keystone2_K2E-28384-IP']
 
 	return order_nightly_datas
 
@@ -82,7 +98,7 @@ def user(date=None):
 			#print(order_nightly_datas[item]['board'])
 			
 		if order_nightly_datas_up is not None:
-			return render_template('users.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
+			return render_template('users_js.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
 		else:
 			return "No data found!"
 

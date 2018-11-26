@@ -117,7 +117,7 @@ def msg2html (fd, msg):
 def summary (fd, productName, spin_name, ltaf_release_name, ltaf_component, matrix_page,
              total_no, pass_no, pass_rate, fail_no, block_no,
              gitDir, wasspHome, 
-             configure, htmlLink, projectPath, ltaf_link, total_time
+             configure, htmlLink, projectPath, ltaf_link, total_time, run_date
              ):
     buildFail = 0
     execFail = 0
@@ -155,7 +155,8 @@ def summary (fd, productName, spin_name, ltaf_release_name, ltaf_component, matr
     msg2html(fd, '<b><br></b>')
 
     # MongoDB link
-    msg2html(fd, '<table style="font-family:Arial"><tr><th width="100">LTAF Link</th><td><a href=%s> %s </a></td></tr></table>' % (ltaf_link, ltaf_link))
+    msg2html(fd, '<table style="font-family:Arial"><tr><th width="100">LTAF Link</th><td><a href=%s> %s </a></td></tr>' % (ltaf_link, ltaf_link))
+    msg2html(fd, '<tr><th width="100">Test Results</th><td><a href=%s> %s </a></td></tr></table>' % ('http://pek-vx-nwk1/date/{date}'.format(date = run_date), 'http://pek-vx-nwk1/date/{date}'.format(date = run_date)))
     msg2html(fd, '<br><br>')
     msg2html(fd, '<b><br></b>')
 
@@ -222,7 +223,7 @@ def send_nighlty_test_report_email_ltaf(email_to_list, spin_name, ltaf_release_n
     summary (htmlFd, productName, spin_name, ltaf_release_name, ltaf_component, matrix_page,
              total_no, pass_no, pass_rate, fail_no, block_no,
              gitDir, wasspHome,
-             configure, htmlLink, projectPath, ltaf_link, total_time)
+             configure, htmlLink, projectPath, ltaf_link, total_time, run_date)
     htmlFd.close()
     cmd = "cat ltaf_email.html"
     (rtn_code, mail_body) = run_shell_cmd(cmd)
@@ -282,9 +283,8 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--run_date', metavar='yes', dest='run_date', nargs='+', help='run_date', default=None)
     args = parser.parse_args()
 
-    #email_to_list = 'yanyan.liu@windriver.com; xiaozhan.li@windriver.com; haixiao.yan@windriver.com; li.wan@windriver.com; peng.bi@windriver.com; ENG-VxNET-China@windriver.com; vx7-nightly-test@list-int.wrs.com'
-    #email_to_list = 'yanyan.liu@windriver.com; xiaozhan.li@windriver.com; haixiao.yan@windriver.com; li.wan@windriver.com; xiuli.sun@windriver.com; peng.bi@windriver.com; ENG-VxNET-China@windriver.com'
-    email_to_list = 'haixiao.yan@windriver.com'
+    email_to_list = 'yanyan.liu@windriver.com; xiaozhan.li@windriver.com; haixiao.yan@windriver.com; li.wan@windriver.com; xiuli.sun@windriver.com; peng.bi@windriver.com; chunyan.ye@windriver.com; ENG-VxNET-China@windriver.com'
+    #email_to_list = 'haixiao.yan@windriver.com'
     ltaf_component = 'networking'
 
     spin_name = args.spin_name[0]

@@ -8,8 +8,8 @@ import logging
 import re
 import argparse
 from fnmatch import fnmatch
-logging.basicConfig(level=logging.WARNING)
-#logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 
 def parse_xml(xml_file):
 	dict_node = {}

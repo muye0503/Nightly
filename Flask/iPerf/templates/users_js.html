@@ -1,0 +1,282 @@
+<!doctype html>
+<title>iPerf Data</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>iPerf Nightly Results</h1>
+
+<h2>UP</h2>
+<table id="up">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		TCP_64_bl
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
+		</td>
+		<td>
+		UDP_1400
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
+	</tr>
+{%for data in datas_up %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
+		<td>
+		{{ loop.index }}
+		</td>
+	
+	{% for key in datas_up[data] %}
+	    {% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_up[data][key] }}
+    	</td>
+    {% endfor %}
+    
+	</tr>
+{% endfor %}
+</table>
+
+<script>
+	function get_rate_up() {
+		table_up_rows = document.getElementById('up').rows;
+		var i;
+		for (i = 1; i < table_up_rows.length; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=6; j < 13;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+1].style.color = "red";
+				}
+				j += 2;
+			}
+		}
+	}
+</script>
+<button onclick="get_rate_up();this.disabled=true">Compare</button>
+
+
+<h2>SMP</h2>
+<table id="smp">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		TCP_64_bl
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
+		</td>
+		<td>
+		UDP_1400
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
+	</tr>
+{%for data in datas_smp %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
+		<td>
+		{{ loop.index }}
+		</td>
+	
+	{% for key in datas_smp[data] %}
+		{% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_smp[data][key] }}
+    	</td>
+    {% endfor %}
+    
+	</tr>
+{% endfor %}
+</table>
+
+<script>
+	function get_rate_smp() {
+		table_up_rows = document.getElementById('smp').rows;
+		var i;
+		for (i = 1; i < table_up_rows.length; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=6; j < 13;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+1].style.color = "red";
+				}
+				j += 2;
+			}
+		}
+	}
+</script>
+<button onclick="get_rate_smp();this.disabled=true">Compare</button>
+
+<h2>SMP 1Core</h2>
+<table id="smp_1core">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		BSP
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		TCP_64_bl
+		</td>
+		<td>
+		TCP_64
+		</td>
+		<td>
+		TCP_1024_bl
+		</td>
+		<td>
+		TCP_1024
+		</td>
+		<td>
+		TCP_65536_bl
+		</td>
+		<td>
+		TCP_65536
+		</td>
+		<td>
+		UDP_1400_bl
+		</td>
+		<td>
+		UDP_1400
+		</td>
+		<td>
+		spin
+		</td>
+		<td>
+		run_date
+		</td>
+	</tr>
+{%for data in datas_smp_1core %}
+	<tr class="{{ loop.cycle('odd', 'even') }}">
+		<td>
+		{{ loop.index }}
+		</td>
+	
+	{% for key in datas_smp_1core[data] %}
+		{% if loop.index in [6, 8, 10, 12] %}
+	    <td class="baseline">
+	    {% else %}
+	    <td>
+	    {% endif%}
+    	{{ datas_smp_1core[data][key] }}
+    	</td>
+    {% endfor %}
+    
+	</tr>
+{% endfor %}
+</table>
+
+<script>
+	function get_rate_smp_1core() {
+		table_up_rows = document.getElementById('smp_1core').rows;
+		var i;
+		for (i = 1; i < table_up_rows.length; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=6; j < 13;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+1].style.color = "red";
+				}
+				j += 2;
+			}
+		}
+	}
+</script>
+<button onclick="get_rate_smp_1core();this.disabled=true">Compare</button>
+

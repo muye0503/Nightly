@@ -3,16 +3,15 @@
 # 
 import os.path
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime
 import json
 import shutil
 from tempfile import NamedTemporaryFile
 import xlrd
 import xlwt
 import xlutils
-from iPerf_run_database import find_data, update_iperf_data
+from iPerf_run_database import find_data, update_iperf_data, get_config
 import sys
-import random
 
 dict_case = {}
 
@@ -88,15 +87,18 @@ def main():
 	args = parse.parse_args()
 	if time_delta(args.rundate) > 0:
 		sys.exit(0)
-	plan = args.plan
-	dict_tmp = find_data(plan)
+	wassp_plan = args.plan
+	dict_tmp = find_data(wassp_plan)
 	print(dict_tmp['workspace'])
 	wassp_home = '/home/windriver/wassp-repos'
 	workspace = dict_tmp['workspace']
 	log_path = dict_tmp['log_path']
-	rerun_plan = create_rerun_plan(log_path, plan)
+	rerun_plan = create_rerun_plan(log_path, wassp_plan)
 	dvd = args.dvd
-	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now() + timedelta(seconds=random.randrange(60)))
+	dict_config = get_config(wassp_plan)
+	board = dict_config['Board']
+	time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+	dir_name = 'log_{TIME}_{BOARD}'.format(TIME = time, BOARD = board)
 	logs = os.path.join('/home/windriver/Logs', dir_name)
 	if not os.path.exists(logs):
 		os.makedirs(logs)
@@ -112,6 +114,6 @@ def main():
 	#upload_command = 'bash /home/windriver/wassp-repos/testcases/vxworks7/LTAF_meta/ltaf_vxworks.sh -sprint "{SPRINT}" -week {WEEK} -ltaf {LTAF} -log {LOG} -domain {DOMAIN} -nightly'.format(SPRINT = sprint, WEEK = week, LTAF = release, LOG = logs, DOMAIN = domain) 
 	upload_command = 'python3 /folk/hyan1/Nightly/iPerf_smp_1core/load_ltaf.py --log {LOG} --rundate {RUNDATE} --release {RELEASE}'.format( LOG= logs, RUNDATE = week, RELEASE = release)
 	os.system(upload_command)
-	update_iperf_data(plan, week, logs)
+	update_iperf_data(wassp_plan, week, logs)
 if __name__ == '__main__':
 	main()

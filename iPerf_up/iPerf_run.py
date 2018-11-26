@@ -2,10 +2,9 @@
 # coding: utf-8
 # 
 import os
-from datetime import datetime, timedelta
-import random
+from datetime import datetime
 import argparse
-from iPerf_run_database import insert_data, insert_iperf_data, insert_baseline_data
+from iPerf_run_database import insert_data, insert_iperf_data, insert_baseline_data, get_config
 
 def main():
 	parse = argparse.ArgumentParser()
@@ -15,7 +14,10 @@ def main():
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
 	args = parse.parse_args()
 	wassp_plan = args.plan
-	dir_name = 'log_{:%Y_%m_%d_%H_%M_%S}'.format(datetime.now() + timedelta(seconds=random.randrange(60)))
+	dict_config = get_config(wassp_plan)
+	board = dict_config['Board']
+	time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+	dir_name = 'log_{TIME}_{BOARD}'.format(TIME = time, BOARD = board)
 	dvd = args.dvd
 	wassp_home = '/home/windriver/wassp-repos'
 	workspace = os.path.join('/home/windriver/Workspace', dir_name)
