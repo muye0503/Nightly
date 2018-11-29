@@ -156,7 +156,7 @@ def summary (fd, productName, spin_name, ltaf_release_name, ltaf_component, matr
 
     # MongoDB link
     msg2html(fd, '<table style="font-family:Arial"><tr><th width="100">LTAF Link</th><td><a href=%s> %s </a></td></tr>' % (ltaf_link, ltaf_link))
-    msg2html(fd, '<tr><th width="100">Test Results</th><td><a href=%s> %s </a></td></tr></table>' % ('http://pek-vx-nwk1/date/{date}'.format(date = run_date), 'http://pek-vx-nwk1/date/{date}'.format(date = run_date)))
+    msg2html(fd, '<tr><th width="100">Test Results</th><td><a href=%s> %s </a></td></tr></table>' % ('http://pek-vx-nwk1/report/{date}'.format(date = run_date), 'http://pek-vx-nwk1/report/{date}'.format(date = run_date)))
     msg2html(fd, '<br><br>')
     msg2html(fd, '<b><br></b>')
 

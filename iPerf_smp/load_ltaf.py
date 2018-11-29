@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.WARNING)
 
 def parse_xml(xml_file):
 	dict_node = {}
-	dict_node.setdefault('buildStatus', 'PASS')
+	dict_node.setdefault('buildStatus', 'FAIL')
 	dict_node.setdefault('vsboptions', '')
 	try:
 		tree = ET.parse(xml_file)

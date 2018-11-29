@@ -83,17 +83,20 @@
 			var x = table_up_rows[i].cells;
 			var j;
 			for (j=6; j < 13;) {
-				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
 				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
 				if (temp < 0) {
 					x[j+1].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+1].style.color = "Cyan";
 				}
 				j += 2;
 			}
 		}
 	}
+	get_rate_up();
 </script>
-<button onclick="get_rate_up();this.disabled=true">Compare</button>
 
 
 <h2>SMP</h2>
@@ -176,17 +179,20 @@
 			var x = table_up_rows[i].cells;
 			var j;
 			for (j=6; j < 13;) {
-				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
 				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
 				if (temp < 0) {
 					x[j+1].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+1].style.color = "Cyan";
 				}
 				j += 2;
 			}
 		}
 	}
+	get_rate_smp();
 </script>
-<button onclick="get_rate_smp();this.disabled=true">Compare</button>
 
 <h2>SMP 1Core</h2>
 <table id="smp_1core">
@@ -268,15 +274,18 @@
 			var x = table_up_rows[i].cells;
 			var j;
 			for (j=6; j < 13;) {
-				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
 				x[j+1].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
 				if (temp < 0) {
 					x[j+1].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+1].style.color = "Cyan";
 				}
 				j += 2;
 			}
 		}
 	}
+	get_rate_smp_1core();
 </script>
-<button onclick="get_rate_smp_1core();this.disabled=true">Compare</button>
 

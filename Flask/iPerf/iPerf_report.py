@@ -98,7 +98,7 @@ def user(date=None):
 			#print(order_nightly_datas[item]['board'])
 			
 		if order_nightly_datas_up is not None:
-			return render_template('users_js.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
+			return render_template('users.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
 		else:
 			return "No data found!"
 
@@ -108,6 +108,28 @@ def get_data():
 	baseline_data_smp = mongo.db.iperf_smp_bl_tb.find({}, {'_id':0})
 	baseline_data_smp_1core = mongo.db.iperf_smp_1core_bl_tb.find({}, {'_id':0})
 	return render_template('baseline.html', datas_up = baseline_data_up, datas_smp = baseline_data_smp, datas_smp_1core = baseline_data_smp_1core)
+
+@app.route('/report/<string:date>')
+def report(date=None):
+	if date is None:
+		datas = mongo.db.iperf_tb.find()
+		return render_template('users.html', datas = datas)
+	else:
+		#print('=================')
+		#print(date)
+		nightly_data_up = mongo.db.iperf_up_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_up = order_data(nightly_data_up, 'up')
+		nightly_data_smp = mongo.db.iperf_smp_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_smp = order_data(nightly_data_smp, 'smp')
+		nightly_data_smp_1core = mongo.db.iperf_smp_1core_tb.find({'run_date':date}, {'_id':0})
+		order_nightly_datas_smp_1core = order_data(nightly_data_smp_1core, 'smp_1core')
+		#for item in order_nightly_datas:
+			#print(order_nightly_datas[item]['board'])
+			
+		if order_nightly_datas_up is not None:
+			return render_template('users_js.html', datas_up = order_nightly_datas_up, datas_smp = order_nightly_datas_smp, datas_smp_1core = order_nightly_datas_smp_1core)
+		else:
+			return "No data found!"
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
