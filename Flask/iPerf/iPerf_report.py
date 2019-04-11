@@ -8,7 +8,7 @@ from collections import OrderedDict
 
 app = Flask(__name__)
 #app.config['MONGO_URI'] = "mongodb://localhost:27017/iperf_db"
-app.config['MONGO_URI'] = "mongodb://128.224.153.34:27017/iperf_db"
+app.config['MONGO_URI'] = "mongodb://128.224.153.34:27017,128.224.166.223:27107,128.224.166.211:27107/iperf_db"
 mongo = PyMongo(app)
 
 def order_data(data, mode):
@@ -76,6 +76,12 @@ def order_data(data, mode):
 		order_nightly_datas['fsl_LS1043A_RDB_PC-25064-32'] = nightly_datas['fsl_LS1043A_RDB_PC-25064-32']
 	if 'TI_keystone2_K2E-28384-IP' in nightly_datas:
 		order_nightly_datas['TI_keystone2_K2E-28384-IP'] = nightly_datas['TI_keystone2_K2E-28384-IP']
+	if 'NXP_LS1046ARDB-25072' in nightly_datas:
+		order_nightly_datas['NXP_LS1046ARDB-25072'] = nightly_datas['NXP_LS1046ARDB-25072']
+	if 'NXP_LS1046ARDB-25072-32' in nightly_datas:
+		order_nightly_datas['NXP_LS1046ARDB-25072-32'] = nightly_datas['NXP_LS1046ARDB-25072-32']
+	if 'Q170-28512-32' in nightly_datas:
+		order_nightly_datas['Q170-28512-32'] = nightly_datas['Q170-28512-32']
 
 	return order_nightly_datas
 

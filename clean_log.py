@@ -16,7 +16,7 @@ def get_disk_used(disk_name):
 	result = execute_local_shell_cmd("df | grep %s | awk '{print $5}'" % disk_name)
 	return result[0]
 
-def file_modify_in(file_path,time_interval='2d'):
+def file_modify_in(file_path,time_interval='7d'):
 	current_time = time.time()
 	# os.path.getmtime 返回最后修改时间。返回从unix纪元开始的跳秒数
 	try:
@@ -110,7 +110,7 @@ if __name__ == "__main__":
 	match = pattern.match(result)
 	used = match.group()
 	print(used)
-	if int(used) >= 90:
+	if int(used) >= 50:
 		for dir in path_list:
 			#print(dir)
 			remove_file(dir)

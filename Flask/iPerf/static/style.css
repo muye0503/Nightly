@@ -36,7 +36,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 {
 	font-size:1em;
 	text-align:right;
-	border:1px solid #98bf21;
+	border:1px solid #6699CC;
 	padding:3px 7px 2px 7px;
 }
 #up th 
@@ -51,7 +51,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 #up tr.alt td 
 {
 	color:#000000;
-	background-color:#EAF2D3;
+	background-color:#FFFFFF;
 	text-align:center;
 }
 
@@ -71,7 +71,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 {
 	font-size:1em;
 	text-align:right;
-	border:1px solid #98bf21;
+	border:1px solid #6699CC;
 	padding:3px 7px 2px 7px;
 }
 #smp th 
@@ -86,7 +86,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 #smp tr.alt td 
 {
 	color:#000000;
-	background-color:#EAF2D3;
+	background-color:#FFFFFF;
 	text-align:center;
 }
 
@@ -106,7 +106,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 {
 	font-size:1em;
 	text-align:right;
-	border:1px solid #98bf21;
+	border:1px solid #6699CC;
 	padding:3px 7px 2px 7px;
 }
 #smp_1core th 
@@ -121,7 +121,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 #smp_1core tr.alt td 
 {
 	color:#000000;
-	background-color:#EAF2D3;
+	background-color:#FFFFFF;
 	text-align:center;
 }
 
