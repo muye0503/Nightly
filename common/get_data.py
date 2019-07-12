@@ -44,12 +44,15 @@ def get_throughput(log):
             m = pat.search(line)
             if m:
                 dict_data.setdefault('frame',m.group(1))
-            if line.endswith('sender'):
-                data = line.split()[-3]     
-                dict_data.setdefault('sender',data)
-            if line.endswith('receiver'):
-                data = line.split()[-3]
-                dict_data.setdefault('receiver',data)
+            if line.endswith('Mbits/sec'):
+                data = line.split()[-2]
+                dict_data.setdefault('sender', data)
+            #if line.endswith('sender'):
+            #    data = line.split()[-3]     
+            #    dict_data.setdefault('sender',data)
+            #if line.endswith('receiver'):
+            #    data = line.split()[-3]
+            #    dict_data.setdefault('receiver',data)
             if line.endswith('%)'):
                 data = line.split()[-6]
                 dict_data.setdefault('sender',data)

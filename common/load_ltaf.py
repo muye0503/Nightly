@@ -8,12 +8,13 @@ import logging
 import re
 import argparse
 from fnmatch import fnmatch
-#logging.basicConfig(level=logging.WARNING)
-logging.basicConfig(level=logging.INFO)
+from blacklist import get_backlist
+logging.basicConfig(level=logging.WARNING)
+#logging.basicConfig(level=logging.INFO)
 
 def parse_xml(xml_file):
 	dict_node = {}
-	dict_node.setdefault('buildStatus', 'PASS')
+	dict_node.setdefault('buildStatus', 'FAIL')
 	dict_node.setdefault('vsboptions', '')
 	try:
 		tree = ET.parse(xml_file)
@@ -56,23 +57,38 @@ def parse_xml(xml_file):
 		print(e)
 		sys.exit(0)
 
+def get_test_suite(file):
+	patt = re.compile(r'test_suite\s+=\s+(\w+)')
+	patt_1 = re.compile(r'release_name\s+=\s+([\w-]+)')
+	test_suite = ''
+	with open(file, 'r', encoding='utf-8') as f1, open('%s.bak' % file, 'w', encoding='utf-8') as f2:
+		for line in f1:
+			if re.search(patt, line) is not None:
+				test_suite = re.search(patt, line).group(1)
+			if re.search(patt_1, line) is not None:
+				line = line.replace(re.search(patt_1, line).group(1),'vxworks_sandbox')
+			f2.write(line)
+	os.remove(file)
+	os.rename('%s.bak' % file, file)
+	return test_suite
+
 def find_xml(**kw):
-	for log_dir in os.listdir(kw['log']):
-		os.chdir(kw['log'])
-		print(os.getcwd())
-		print(os.path.abspath(log_dir))
-		result_dir = os.path.join(os.path.abspath(log_dir), 'LTAF/Result')
-		#print(result_dir)
-		if not os.path.exists(result_dir):
-			os.makedirs(result_dir)
-		for dirpath, dirnames, filenames in os.walk(log_dir):
+	list_black = get_backlist()
+	result_dir = os.path.join(kw['log'], 'LTAF/Result')
+	if not os.path.exists(result_dir):
+		os.makedirs(result_dir)
+	for dirpath, dirnames, filenames in os.walk(kw['log']):
 			for filename in filenames:
 				if fnmatch(filename, 'testRunWorkingCopy.xml'):
 					create_ini(os.path.join(dirpath, filename), result_dir, **kw)
-		for file in os.listdir(result_dir):
-			command = 'curl -F resultfile=@{FILE} http://pek-lpgtest3.wrs.com/ltaf/upload_results.php'.format(FILE = os.path.join(result_dir, file))
-			print(command)
-			os.system(command)
+	for file in os.listdir(result_dir):
+		test_suite = get_test_suite(os.path.join(result_dir, file))
+		if (os.path.splitext(file)[0], test_suite) in list_black:
+			print('({}|{}) in black list'.format(os.path.splitext(file)[0], test_suite))
+			#continue
+		command = 'curl -F resultfile=@{FILE} http://pek-lpgtest3.wrs.com/ltaf/upload_nightly_results.php'.format(FILE = os.path.join(result_dir, file))
+		#print(command)
+		os.system(command)
 
 def create_ini(filename, result_dir, **kw):
 	#print(kw)
@@ -88,9 +104,7 @@ def create_ini(filename, result_dir, **kw):
 	dict_ini.setdefault('sprint', 'Nightly')
 	# for release testing, need input USER_STORIES num
 	dict_ini.setdefault('requirements', '')
-	logging.info('##########################')
 	logging.info(filename)
-	logging.info('##########################')
 	dict_node = parse_xml(filename)
 	dict_ini['BSP'] = dict_node['bsp']
 	dict_ini['Tool'] = dict_node['tool']
@@ -101,7 +115,7 @@ def create_ini(filename, result_dir, **kw):
 	dict_ini['Options'] = dict_node['options']
 	dict_ini['Vsboptions'] = dict_node['vsboptions']
 	dict_ini['status'] = dict_node['execStatus']
-	dict_ini['log'] = os.path.dirname(dict_node['status_log']).replace('/home/windriver/Logs', 'http://pek-cc-pb08l.wrs.com/vxtest/vxtest1/LOG_VX7/Vx-7_Networking/{RELEASE}/{FEATURE}'.format(RELEASE = kw['release'], FEATURE = kw['feature']))
+	dict_ini['log'] = os.path.dirname(dict_node['status_log']).replace('/home/windriver/Logs', 'http://128.224.166.211')
 	dict_ini['build'] = dict_node['buildStatus']
 	dict_ini['test_name'] = dict_node['test_name']
 	dict_ini['test_suite'] = dict_node['test_suite']
@@ -130,15 +144,15 @@ def create_ini(filename, result_dir, **kw):
 	with open(template, 'r', encoding='utf-8') as f:
 		for line in f:
 			if '=' in line:
-				#logging.info(line)
+				logging.info(line)
 				item = line.split('=')[0].strip()
-				#logging.info(item)
+				logging.info(item)
 				#print(item, item_lower)
 				if item in dict_ini:
 					#print(item_lower, dict_node[item_lower])
 					line = '{ITEM} = {VALUE} {END}'.format(ITEM = item, VALUE = dict_ini[item], END = os.linesep)
-					#logging.info(line)
-					#logging.info('========================')
+					logging.info(line)
+					logging.info('========================')
 			file_data += line 
 	with open(case_ini, 'w', encoding='utf-8') as f:
 		#logging.info(file_data)
@@ -148,15 +162,13 @@ def main():
 	parse = argparse.ArgumentParser()
 	parse.add_argument('--log', help='log path', dest='log', required=True)
 	parse.add_argument('--rundate', help='rundate', dest='rundate', required=True)
-	parse.add_argument('--release', help='ltaf release', dest='release', required=True)
-	parse.add_argument('--feature', help='feature', dest='feature', required=True)
+	parse.add_argument('--release', help='ltaf release', dest='release', required=False)
 	parse.add_argument('--sprint', help='ltaf sprint', dest='sprint', required=False)
 	parse.add_argument('--requirements', help='USER_STORIES ID', dest='requirements', required=False)
 	args = parse.parse_args()
 	p_log = args.log
 	p_rundate = args.rundate
 	p_release = args.release
-	p_feature = args.feature
 	p_sprint = args.sprint
 	p_requirements = args.requirements
 	kw = {}
@@ -166,8 +178,6 @@ def main():
 		kw['rundate'] = p_rundate
 	if p_release:
 		kw['release'] = p_release
-	if p_feature:
-		kw['feature'] = p_feature
 	if p_sprint:
 		kw['sprint'] = p_sprint
 	if p_requirements:
