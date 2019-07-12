@@ -8,6 +8,8 @@ import logging
 import re
 import argparse
 from fnmatch import fnmatch
+import time
+from datetime import datetime
 from blacklist import get_backlist
 logging.basicConfig(level=logging.WARNING)
 #logging.basicConfig(level=logging.INFO)
@@ -59,14 +61,21 @@ def parse_xml(xml_file):
 
 def get_test_suite(file):
 	patt = re.compile(r'test_suite\s+=\s+(\w+)')
-	patt_1 = re.compile(r'release_name\s+=\s+([\w-]+)')
+	#patt_1 = re.compile(r'release_name\s+=\s+([\w-]+)')
+	patt_2 = re.compile(r'sprint\s+=\s+(\w+)')
+	patt_3 = re.compile(r'week\s+=\s+([\w-]+)')
 	test_suite = ''
+	week = 'week'+time.strftime('%y',time.localtime())+'{:0>2s}'.format(str(datetime.now().isocalendar()[1]))
 	with open(file, 'r', encoding='utf-8') as f1, open('%s.bak' % file, 'w', encoding='utf-8') as f2:
 		for line in f1:
 			if re.search(patt, line) is not None:
 				test_suite = re.search(patt, line).group(1)
-			if re.search(patt_1, line) is not None:
-				line = line.replace(re.search(patt_1, line).group(1),'vxworks_sandbox')
+			#if re.search(patt_1, line) is not None:
+			#	line = line.replace(re.search(patt_1, line).group(1),'vxworks_sandbox')
+			if re.search(patt_2, line) is not None:
+				line = line.replace(re.search(patt_2, line).group(1),'Weekly')
+			if re.search(patt_3, line) is not None:
+				line = line.replace(re.search(patt_3, line).group(1), week)
 			f2.write(line)
 	os.remove(file)
 	os.rename('%s.bak' % file, file)
@@ -84,7 +93,7 @@ def find_xml(**kw):
 	for file in os.listdir(result_dir):
 		test_suite = get_test_suite(os.path.join(result_dir, file))
 		if (os.path.splitext(file)[0], test_suite) in list_black:
-			print('({}|{}) in black list'.format(os.path.splitext(file)[0], test_suite))
+			print('({}|{}) in black list, load result to weekly'.format(os.path.splitext(file)[0], test_suite))
 			#continue
 		command = 'curl -F resultfile=@{FILE} http://pek-lpgtest3.wrs.com/ltaf/upload_nightly_results.php'.format(FILE = os.path.join(result_dir, file))
 		#print(command)
@@ -126,6 +135,7 @@ def create_ini(filename, result_dir, **kw):
 	if dict_ini['status'] == 'NotStarted':
 		dict_ini['status'] = 'Not Started'
 	if dict_ini['status'] == 'PASS':
+		dict_ini['build'] = 'PASS'
 		dict_ini['function_pass'] = '1'
 	else:
 		dict_ini['function_fail'] = '1'
