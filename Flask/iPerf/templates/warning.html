@@ -1,0 +1,43 @@
+<!doctype html>
+<title>Warning Cases</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>Warning Cases</h1>
+
+<table id="up">
+	<tr class="alt">
+		<td>
+		Num
+		</td>
+		<td>
+		Board
+		</td>
+		<td>
+		Bits
+		</td>
+		<td>
+		CPU
+		</td>
+		<td>
+		Mode
+		</td>
+		<td>
+		Frame
+		</td>
+		<td>
+		Result
+		</td>
+	</tr>
+{%for data in datas %}
+	<tr>
+		<td>
+		{{ loop.index }}
+		</td>
+	{% for item in data %}
+		<td>
+    	{{ item }}
+    	</td>
+    {% endfor %}
+	</tr>
+{% endfor %}
+</table>
+

@@ -50,5 +50,5 @@ def run(interval, barcode):
 
 if __name__ == "__main__":
 	interval = 600
-	barcode = '25064'
+	barcode = '22041'
 	run(interval, barcode)

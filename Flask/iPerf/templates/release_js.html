@@ -1,0 +1,786 @@
+<!doctype html>
+<title>iPerf Data</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>iPerf Release Results</h1>
+
+<h2>UP</h2>
+<table id="up">
+	<tr class="alt">
+		<td>
+		Config
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['board'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['board'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Bits
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">	
+		<td>
+		BSP
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		CPU
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Mode
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_64_test_result
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_1024_test_result
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_65536_test_result
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		UDP_1400_test_result
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Spin
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['spin'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['spin'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Run_date
+		</td>
+		<td>
+		{{ datas_up['Q170-28512']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_up['Q170-28512-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_up['XILINX_ZCU102-28572-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+</table>
+
+<script>
+	function get_rate_up() {
+		table_up_rows = document.getElementById('up').rows;
+		var i;
+		for (i = 5; i < 9; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=1; j < 5;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
+				x[j+2].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+2].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+2].style.color = "#009900";
+				}
+				j += 3;
+			}
+		}
+	}
+	get_rate_up();
+</script>
+
+<h2>SMP</h2>
+<table id="smp">
+	<tr class="alt">
+		<td>
+		Config
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['board'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['board'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Bits
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">	
+		<td>
+		BSP
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		CPU
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Mode
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_64_test_result
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_1024_test_result
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_65536_test_result
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		UDP_1400_test_result
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Spin
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['spin'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['spin'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Run_date
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_smp['Q170-28512-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_smp['XILINX_ZCU102-28572-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+</table>
+
+<script>
+	function get_rate_smp() {
+		table_up_rows = document.getElementById('smp').rows;
+		var i;
+		for (i = 5; i < 9; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=1; j < 5;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
+				x[j+2].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+2].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+2].style.color = "#009900";
+				}
+				j += 3;
+			}
+		}
+	}
+	get_rate_smp();
+</script>
+
+<h2>SMP 1Core</h2>
+<table id="smp_1core">
+	<tr class="alt">
+		<td>
+		Config
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['board'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['board'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['board'] }}
+		</td>
+		<td>
+		RTP%Kernel
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Bits
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['Bits'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['Bits'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">	
+		<td>
+		BSP
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['BSP'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['BSP'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		CPU
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['CPU'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['CPU'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Mode
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['Mode'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['Mode'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_64_test_result
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['TCP_64'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['TCP_64'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_1024_test_result
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['TCP_1024'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['TCP_1024'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		TCP_65536_test_result
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['TCP_65536'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['TCP_65536'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		UDP_1400_test_result
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['UDP_1400'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['UDP_1400'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Spin
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['spin'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['spin'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['spin'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr class="alt">
+		<td>
+		Run_date
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['Q170-28512-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572']['run_date'] }}
+		</td>
+		<td>
+		{{ datas_smp_1core['XILINX_ZCU102-28572-RTP']['run_date'] }}
+		</td>
+		<td>
+		</td>
+	</tr>
+</table>
+
+<script>
+	function get_rate_smp_1core() {
+		table_up_rows = document.getElementById('smp_1core').rows;
+		var i;
+		for (i = 5; i < 9; i++) {
+			var x = table_up_rows[i].cells;
+			var j;
+			for (j=1; j < 5;) {
+				var temp = (x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML;
+				x[j+2].innerHTML = Number((x[j+1].innerHTML - x[j].innerHTML)/x[j].innerHTML*100).toFixed(2) + '%';
+				if (temp < 0) {
+					x[j+2].style.color = "red";
+				}
+				else if (temp > 0){
+					x[j+2].style.color = "#009900";
+				}
+				j += 3;
+			}
+		}
+	}
+	get_rate_smp_1core();
+</script>
+
+

@@ -10,7 +10,7 @@
 		Num
 		</td>
 		<td>
-		board
+		Board
 		</td>
 		<td>
 		Bits
@@ -25,34 +25,34 @@
 		Mode
 		</td>
 		<td>
-		TCP_64_bl
+		TCP_64_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_64
+		TCP_64_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024_bl
+		TCP_1024_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024
+		TCP_1024_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536_bl
+		TCP_65536_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536
+		TCP_65536_test_result (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400_bl
+		UDP_1400_baseline (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400
+		UDP_1400_test_result (Mbits/sec)
 		</td>
 		<td>
-		spin
+		Spin
 		</td>
 		<td>
-		run_date
+		Run_date
 		</td>
 	</tr>
 {%for data in datas_up %}
@@ -65,7 +65,7 @@
 	    {% if loop.index in [6, 8, 10, 12] %}
 	    <td class="baseline">
 	    {% else %}
-	    <td>
+	    <td class="nonewline">
 	    {% endif%}
     	{{ datas_up[data][key] }}
     	</td>
@@ -82,7 +82,7 @@
 		Num
 		</td>
 		<td>
-		board
+		Board
 		</td>
 		<td>
 		Bits
@@ -97,34 +97,34 @@
 		Mode
 		</td>
 		<td>
-		TCP_64_bl
+		TCP_64_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_64
+		TCP_64_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024_bl
+		TCP_1024_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024
+		TCP_1024_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536_bl
+		TCP_65536_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536
+		TCP_65536_test_result (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400_bl
+		UDP_1400_baseline (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400
+		UDP_1400_test_result (Mbits/sec)
 		</td>
 		<td>
-		spin
+		Spin
 		</td>
 		<td>
-		run_date
+		Run_date
 		</td>
 	</tr>
 {%for data in datas_smp %}
@@ -137,7 +137,7 @@
 		{% if loop.index in [6, 8, 10, 12] %}
 	    <td class="baseline">
 	    {% else %}
-	    <td>
+	    <td class="nonewline">
 	    {% endif%}
     	{{ datas_smp[data][key] }}
     	</td>
@@ -154,7 +154,7 @@
 		Num
 		</td>
 		<td>
-		board
+		Board
 		</td>
 		<td>
 		Bits
@@ -169,34 +169,34 @@
 		Mode
 		</td>
 		<td>
-		TCP_64_bl
+		TCP_64_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_64
+		TCP_64_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024_bl
+		TCP_1024_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_1024
+		TCP_1024_test_result (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536_bl
+		TCP_65536_baseline (Mbits/sec)
 		</td>
 		<td>
-		TCP_65536
+		TCP_65536_test_result (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400_bl
+		UDP_1400_baseline (Mbits/sec)
 		</td>
 		<td>
-		UDP_1400
+		UDP_1400_test_result (Mbits/sec)
 		</td>
 		<td>
-		spin
+		Spin
 		</td>
 		<td>
-		run_date
+		Run_date
 		</td>
 	</tr>
 {%for data in datas_smp_1core %}
@@ -209,7 +209,7 @@
 		{% if loop.index in [6, 8, 10, 12] %}
 	    <td class="baseline">
 	    {% else %}
-	    <td>
+	    <td class="nonewline">
 	    {% endif%}
     	{{ datas_smp_1core[data][key] }}
     	</td>
