@@ -61,11 +61,14 @@ class Result(object):
 def screen_short(date, capture_type=None):
 	#SCREEN_PATH = '/net/pek-vx-nwk1/buildarea1/hyan1/ScreenShort'
 	SCREEN_PATH = '/folk/hyan1/Nightly/nightlyReport'
-	chrome_options = webdriver.ChromeOptions()
-	chrome_options.add_argument('--headless')
-	chrome_options.add_argument('--hide-scrollbars')
-	browser =webdriver.Chrome(options = chrome_options)
+	#chrome_options = webdriver.ChromeOptions()
+	#chrome_options.add_argument('--headless')
+	#chrome_options.add_argument('--hide-scrollbars')
+	#browser =webdriver.Chrome(options = chrome_options)
 	#browser.get('http://pek-vx-nwk1/report/{}'.format(date))
+	options = webdriver.FirefoxOptions()
+	options.add_argument('-headless')
+	browser = webdriver.Firefox(executable_path='/buildarea1/hyan1/flask/geckodriver', firefox_options=options)
 	browser.get('http://pek-vx-nwk1/warning/{}'.format(date))
 	#print(browser.page_source)
 	wait = WebDriverWait(browser, 20)
@@ -83,16 +86,19 @@ def screen_short(date, capture_type=None):
 	browser.close()
 
 def get_warning_case(date):
-	chrome_options = webdriver.ChromeOptions()
-	chrome_options.add_argument('--headless')
-	browser =webdriver.Chrome(options = chrome_options)
+	#chrome_options = webdriver.ChromeOptions()
+	#chrome_options.add_argument('--headless')
+	#browser = webdriver.Chrome(options = chrome_options)
+
+	options = webdriver.FirefoxOptions()
+	options.add_argument('-headless')
+	browser = webdriver.Firefox(executable_path='/buildarea1/hyan1/flask/geckodriver', firefox_options=options)
 	browser.get('http://pek-vx-nwk1/report/{}'.format(date))
 	wait = WebDriverWait(browser, 20)
 	item = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//td[@style="color: rgb(255, 165, 0);"]')))
 	page_source = browser.page_source
 	#time.sleep(5)
 	#print(page_source)
-	#browser.close()
 	nightly_result = Result(page_source)
 	#print(nightly_result.get_result())
 	waring_result = nightly_result.get_result()
